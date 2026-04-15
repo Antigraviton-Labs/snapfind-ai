@@ -1,0 +1,70 @@
+﻿Collecting tf-keras
+  Downloading tf_keras-2.20.1-py3-none-any.whl.metadata (1.8 kB)
+Requirement already satisfied: tensorflow<2.21,>=2.20 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tf-keras) (2.20.0)
+Requirement already satisfied: absl-py>=1.0.0 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (2.4.0)
+Requirement already satisfied: astunparse>=1.6.0 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (1.6.3)
+Requirement already satisfied: flatbuffers>=24.3.25 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (25.12.19)
+Requirement already satisfied: gast!=0.5.0,!=0.5.1,!=0.5.2,>=0.2.1 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (0.7.0)
+Requirement already satisfied: google_pasta>=0.1.1 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (0.2.0)
+Requirement already satisfied: libclang>=13.0.0 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (18.1.1)
+Requirement already satisfied: opt_einsum>=2.3.2 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (3.4.0)
+Requirement already satisfied: packaging in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (26.0)
+Requirement already satisfied: protobuf>=5.28.0 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (7.34.0)
+Requirement already satisfied: requests<3,>=2.21.0 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (2.32.3)
+Requirement already satisfied: setuptools in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (82.0.0)
+Requirement already satisfied: six>=1.12.0 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (1.17.0)
+Requirement already satisfied: termcolor>=1.1.0 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (3.3.0)
+Requirement already satisfied: typing_extensions>=3.6.6 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (4.15.0)
+Requirement already satisfied: wrapt>=1.11.0 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (2.1.1)
+Requirement already satisfied: grpcio<2.0,>=1.24.3 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (1.78.0)
+Requirement already satisfied: tensorboard~=2.20.0 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (2.20.0)
+Requirement already satisfied: keras>=3.10.0 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (3.13.2)
+Requirement already satisfied: numpy>=1.26.0 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (2.4.2)
+Requirement already satisfied: h5py>=3.11.0 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (3.15.1)
+Requirement already satisfied: ml_dtypes<1.0.0,>=0.5.1 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorflow<2.21,>=2.20->tf-keras) (0.5.4)
+Requirement already satisfied: wheel<1.0,>=0.23.0 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from astunparse>=1.6.0->tensorflow<2.21,>=2.20->tf-keras) (0.46.3)
+Requirement already satisfied: rich in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from keras>=3.10.0->tensorflow<2.21,>=2.20->tf-keras) (14.3.3)
+Requirement already satisfied: namex in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from keras>=3.10.0->tensorflow<2.21,>=2.20->tf-keras) (0.1.0)
+Requirement already satisfied: optree in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from keras>=3.10.0->tensorflow<2.21,>=2.20->tf-keras) (0.19.0)
+Requirement already satisfied: charset-normalizer<4,>=2 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from requests<3,>=2.21.0->tensorflow<2.21,>=2.20->tf-keras) (3.4.1)
+Requirement already satisfied: idna<4,>=2.5 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from requests<3,>=2.21.0->tensorflow<2.21,>=2.20->tf-keras) (3.10)
+Requirement already satisfied: urllib3<3,>=1.21.1 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from requests<3,>=2.21.0->tensorflow<2.21,>=2.20->tf-keras) (2.3.0)
+Requirement already satisfied: certifi>=2017.4.17 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from requests<3,>=2.21.0->tensorflow<2.21,>=2.20->tf-keras) (2025.1.31)
+Requirement already satisfied: markdown>=2.6.8 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorboard~=2.20.0->tensorflow<2.21,>=2.20->tf-keras) (3.10.2)
+Requirement already satisfied: pillow in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorboard~=2.20.0->tensorflow<2.21,>=2.20->tf-keras) (12.1.1)
+Requirement already satisfied: tensorboard-data-server<0.8.0,>=0.7.0 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorboard~=2.20.0->tensorflow<2.21,>=2.20->tf-keras) (0.7.2)
+Requirement already satisfied: werkzeug>=1.0.1 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from tensorboard~=2.20.0->tensorflow<2.21,>=2.20->tf-keras) (3.1.6)
+Requirement already satisfied: markupsafe>=2.1.1 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from werkzeug>=1.0.1->tensorboard~=2.20.0->tensorflow<2.21,>=2.20->tf-keras) (3.0.3)
+Requirement already satisfied: markdown-it-py>=2.2.0 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from rich->keras>=3.10.0->tensorflow<2.21,>=2.20->tf-keras) (4.0.0)
+Requirement already satisfied: pygments<3.0.0,>=2.13.0 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from rich->keras>=3.10.0->tensorflow<2.21,>=2.20->tf-keras) (2.19.2)
+Requirement already satisfied: mdurl~=0.1 in c:\users\hp\appdata\local\programs\python\python313\lib\site-packages (from markdown-it-py>=2.2.0->rich->keras>=3.10.0->tensorflow<2.21,>=2.20->tf-keras) (0.1.2)
+Downloading tf_keras-2.20.1-py3-none-any.whl (1.7 MB)
+   ---------------------------------------- 1.7/1.7 MB 9.3 MB/s eta 0:00:00
+Installing collected packages: tf-keras
+Successfully installed tf-keras-2.20.1
+pip : 
+At line:1 char:1
++ pip install 
+tf-keras 2>&1 | 
+Out-File -FilePath d:\
+SnapFindAi\pip-tfke 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (:String) [   
+ ], RemoteExceptio    
+n
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+[notice] A new 
+release of pip is 
+available: 24.3.1 -> 
+26.0.1
+[notice] To update, 
+run: python.exe -m 
+pip install --upgrade 
+pip

@@ -1,0 +1,90 @@
+﻿
+> snapfind-ai@0.1.0 build
+> next build
+
+  Γû▓ Next.js 14.2.35
+
+   Creating an optimized production build ...
+node.exe : 
+(node:9748) 
+ExperimentalWarning: 
+Type Stripping is an 
+experimental feature 
+and might change at 
+any time
+At C:\Program Files\no
+dejs\npm.ps1:29 char:3
++   & $NODE_EXE 
+$NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: ((node:9748   
+ ) Exp...nge at an    
+y time:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+(Use `node 
+--trace-warnings ...` 
+to show where the 
+warning was created)
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+
+./src/app/dashboard/events/[eventId]/page.tsx
+215:33  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/app/event/[slug]/page.tsx
+292:37  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+326:37  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/ui/UploadZone.tsx
+124:33  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/19) ...
+   Generating static pages (4/19) 
+   Generating static pages (9/19) 
+   Generating static pages (14/19) 
+ Γ£ô Generating static pages (19/19)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+Γöî Γùï /                                    3.43 kB        99.4 kB
+Γö£ Γùï /_not-found                          873 B          88.1 kB
+Γö£ ╞Æ /api/analytics                       0 B                0 B
+Γö£ ╞Æ /api/auth/login                      0 B                0 B
+Γö£ ╞Æ /api/auth/me                         0 B                0 B
+Γö£ ╞Æ /api/auth/signup                     0 B                0 B
+Γö£ ╞Æ /api/download/[photoId]              0 B                0 B
+Γö£ ╞Æ /api/events                          0 B                0 B
+Γö£ ╞Æ /api/events/[eventId]                0 B                0 B
+Γö£ ╞Æ /api/events/[eventId]/photos         0 B                0 B
+Γö£ ╞Æ /api/events/[eventId]/search         0 B                0 B
+Γö£ ╞Æ /api/events/public/[slug]            0 B                0 B
+Γö£ Γùï /dashboard                           3.76 kB        99.8 kB
+Γö£ Γùï /dashboard/analytics                 2.98 kB        90.2 kB
+Γö£ Γùï /dashboard/events                    3.06 kB        99.1 kB
+Γö£ ╞Æ /dashboard/events/[eventId]          4.73 kB          92 kB
+Γö£ Γùï /dashboard/events/new                2.72 kB          90 kB
+Γö£ ╞Æ /event/[slug]                        4.69 kB         101 kB
+Γö£ Γùï /login                               2.66 kB        98.7 kB
+Γö£ Γùï /pricing                             2.55 kB        98.5 kB
+Γö£ Γùï /robots.txt                          0 B                0 B
+Γö£ Γùï /signup                              2.71 kB        98.7 kB
+Γöö Γùï /sitemap.xml                         0 B                0 B
++ First Load JS shared by all            87.3 kB
+  Γö£ chunks/117-5fd3fbfecddf5882.js       31.7 kB
+  Γö£ chunks/fd9d1056-854bc94fb87f1053.js  53.6 kB
+  Γöö other shared chunks (total)          1.89 kB
+
+
+Γùï  (Static)   prerendered as static content
+╞Æ  (Dynamic)  server-rendered on demand
+
