@@ -144,19 +144,32 @@ export default function EventDetailPage() {
 
     return (
         <div className="animate-fade-in space-y-6">
+            {/* Back Button */}
+            <button
+                onClick={() => router.back()}
+                className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+            >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Back
+            </button>
+
             {/* Event Header */}
-            <div className="flex items-start justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold text-white">{eventData.event.title}</h1>
-                    <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                <div className="min-w-0 flex-1">
+                    <h1 className="text-2xl sm:text-3xl font-bold text-white break-words">{eventData.event.title}</h1>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-2 text-xs sm:text-sm text-gray-500">
                         <span>{new Date(eventData.event.date).toLocaleDateString()}</span>
+                        <span className="hidden sm:inline">•</span>
                         <span>{eventData.event.location}</span>
+                        <span className="hidden sm:inline">•</span>
                         <span className="font-mono text-accent-purple">{eventData.event.eventCode}</span>
                     </div>
                 </div>
-                <div className="flex gap-2">
-                    <Link href={`/dashboard/events/${eventId}/edit`}>
-                        <Button variant="secondary" size="sm">
+                <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                    <Link href={`/dashboard/events/${eventId}/edit`} className="flex-1 sm:flex-none">
+                        <Button variant="secondary" size="sm" className="w-full sm:w-auto">
                             <svg className="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>
@@ -167,66 +180,67 @@ export default function EventDetailPage() {
                         variant="secondary"
                         size="sm"
                         onClick={() => navigator.clipboard.writeText(publicUrl)}
+                        className="flex-1 sm:flex-none"
                     >
                         Copy Link
                     </Button>
-                    <Button variant="danger" size="sm" onClick={handleDelete} loading={deleting}>
+                    <Button variant="danger" size="sm" onClick={handleDelete} loading={deleting} className="flex-1 sm:flex-none">
                         Delete
                     </Button>
                 </div>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
                 {[
                     { label: 'Total', value: eventData.stats.totalPhotos, color: 'text-white' },
                     { label: 'Ready', value: eventData.stats.readyPhotos, color: 'text-green-400' },
                     { label: 'Processing', value: eventData.stats.processingPhotos, color: 'text-yellow-400' },
                     { label: 'Failed', value: eventData.stats.failedPhotos, color: 'text-red-400' },
                 ].map((stat) => (
-                    <GlassCard key={stat.label} className="p-4 text-center">
-                        <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+                    <GlassCard key={stat.label} className="p-3 sm:p-4 text-center">
+                        <p className={`text-lg sm:text-2xl font-bold ${stat.color}`}>{stat.value}</p>
                         <p className="text-xs text-gray-500 mt-1">{stat.label}</p>
                     </GlassCard>
                 ))}
             </div>
 
             {/* Share Link */}
-            <GlassCard className="p-4">
-                <div className="flex items-center gap-3">
-                    <span className="text-sm text-gray-400">Public Link:</span>
-                    <code className="flex-1 text-sm text-accent-purple bg-dark-50/50 px-3 py-1.5 rounded-lg truncate">
+            <GlassCard className="p-3 sm:p-4">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <span className="text-xs sm:text-sm text-gray-400 flex-shrink-0">Public Link:</span>
+                    <code className="flex-1 min-w-0 text-xs sm:text-sm text-accent-purple bg-dark-50/50 px-2 sm:px-3 py-1.5 rounded-lg truncate">
                         {publicUrl}
                     </code>
-                    <Button size="sm" variant="ghost" onClick={() => navigator.clipboard.writeText(publicUrl)}>
+                    <Button size="sm" variant="ghost" onClick={() => navigator.clipboard.writeText(publicUrl)} className="flex-shrink-0">
                         Copy
                     </Button>
                 </div>
             </GlassCard>
 
             {/* Upload Zone */}
-            <GlassCard className="p-6">
-                <h2 className="text-lg font-semibold text-white mb-4">Upload Photos</h2>
+            <GlassCard className="p-4 sm:p-6">
+                <h2 className="text-base sm:text-lg font-semibold text-white mb-4">Upload Photos</h2>
                 <UploadZone eventId={eventId} token={token} onUploadComplete={handleUploadComplete} maxFiles={20} />
             </GlassCard>
 
             {/* Photo Grid */}
             <div>
-                <h2 className="text-lg font-semibold text-white mb-4">
+                <h2 className="text-base sm:text-lg font-semibold text-white mb-4">
                     Photos ({eventData.stats.totalPhotos})
                 </h2>
 
                 {photosLoading ? (
                     <PhotoGridSkeleton />
                 ) : !photos.length ? (
-                    <GlassCard className="p-8">
+                    <GlassCard className="p-4 sm:p-8">
                         <EmptyState
                             title="No photos yet"
                             description="Upload photos using the upload zone above"
                         />
                     </GlassCard>
                 ) : (
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4">
                         {photos.map((photo) => (
                             <div key={photo._id} className="relative group rounded-xl overflow-hidden aspect-square bg-dark-50">
                                 <img

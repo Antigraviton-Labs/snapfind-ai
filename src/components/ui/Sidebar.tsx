@@ -39,7 +39,7 @@ export default function Sidebar() {
     const { user, logout } = useAuth();
 
     return (
-        <aside className="fixed left-0 top-0 bottom-0 w-64 bg-dark-100/80 backdrop-blur-xl border-r border-white/[0.05] z-40 flex flex-col">
+        <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-64 bg-dark-100/80 backdrop-blur-xl border-r border-white/[0.05] z-40 flex-col">
             {/* Logo */}
             <div className="p-6 border-b border-white/[0.05]">
                 <Link href="/" className="flex items-center gap-2">

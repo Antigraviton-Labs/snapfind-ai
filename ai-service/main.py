@@ -121,13 +121,13 @@ startup_time = time.time()
 # ── Startup Event ──
 @app.on_event("startup")
 async def startup_event():
-    """Warm up model on startup for faster first request"""
-    logger.info("Starting model warmup...")
+    """Initialize AWS Rekognition collection on startup"""
+    logger.info("Initializing AWS Rekognition collection...")
     try:
-        model_manager.ensure_loaded()
-        logger.info("Model warmup complete")
+        collection_manager.ensure_collection_exists()
+        logger.info("Collection initialization complete")
     except Exception as e:
-        logger.warning(f"Model warmup failed (will retry on first request): {e}")
+        logger.warning(f"Collection initialization failed (will retry on first request): {e}")
 
 # ── Endpoints ──
 
@@ -135,16 +135,19 @@ async def startup_event():
 async def health_check():
     return HealthResponse(
         status="healthy",
-        modelLoaded=model_manager._model_loaded,
+        collectionInitialized=collection_manager._initialized,
         uptime=time.time() - startup_time,
     )
 
 @app.post("/extract-faces", response_model=ExtractResponse)
 async def extract_faces(request: ExtractRequest):
-    """Extract face embeddings from an image URL"""
+    """Extract face embeddings from an image URL using AWS Rekognition"""
     start = time.time()
 
     try:
+        # Ensure collection exists
+        collection_manager.ensure_collection_exists()
+        
         # Download image with timeout
         logger.info(f"Downloading image for photo {request.photoId}")
         response = requests.get(request.imageUrl, timeout=30, stream=True)
@@ -155,38 +158,44 @@ async def extract_faces(request: ExtractRequest):
         if content_length > 15 * 1024 * 1024:  # 15MB safety margin
             raise HTTPException(status_code=400, detail="Image too large")
 
-        # Memory-safe image loading
-        image_data = io.BytesIO(response.content)
-        image = Image.open(image_data).convert("RGB")
+        # Validate and load image
+        image_bytes = response.content
+        try:
+            image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+        except Exception:
+            raise HTTPException(status_code=400, detail="Invalid image format")
 
-        # Resize if too large (memory optimization)
-        max_dim = 2000
+        # Resize if too large (AWS Rekognition supports up to 4096x4096)
+        max_dim = 4096
         if max(image.size) > max_dim:
             ratio = max_dim / max(image.size)
             new_size = (int(image.size[0] * ratio), int(image.size[1] * ratio))
             image = image.resize(new_size, Image.LANCZOS)
 
-        image_array = np.array(image)
+        # Convert to bytes for Rekognition API
+        img_byte_arr = io.BytesIO()
+        image.save(img_byte_arr, format='JPEG')
+        image_bytes = img_byte_arr.getvalue()
 
-        # Extract faces
-        results = model_manager.extract_faces(image_array)
+        # Extract faces using Rekognition
+        face_data = collection_manager.extract_faces_from_image(image_bytes)
 
         faces = []
-        for result in results:
-            if isinstance(result, dict):
-                embedding = result.get("embedding", [])
-                facial_area = result.get("facial_area", {})
-
-                if embedding and len(embedding) > 0:
-                    faces.append(FaceResult(
-                        embedding=embedding,
-                        box=FaceBox(
-                            x=facial_area.get("x", 0),
-                            y=facial_area.get("y", 0),
-                            w=facial_area.get("w", 0),
-                            h=facial_area.get("h", 0),
-                        ),
-                    ))
+        for face_info in face_data:
+            embedding = face_info.get('embedding', [])
+            bbox = face_info.get('bounding_box', {})
+            
+            # Convert relative bounding box coordinates to pixel values
+            x = int(bbox.get('Left', 0) * image.width)
+            y = int(bbox.get('Top', 0) * image.height)
+            w = int(bbox.get('Width', 0) * image.width)
+            h = int(bbox.get('Height', 0) * image.height)
+            
+            if embedding and len(embedding) > 0:
+                faces.append(FaceResult(
+                    embedding=embedding,
+                    box=FaceBox(x=x, y=y, w=w, h=h),
+                ))
 
         elapsed = time.time() - start
         logger.info(
@@ -207,6 +216,8 @@ async def extract_faces(request: ExtractRequest):
     except requests.exceptions.RequestException as e:
         logger.error(f"Failed to download image: {e}")
         raise HTTPException(status_code=400, detail=f"Failed to download image: {str(e)}")
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Face extraction failed for photo {request.photoId}: {e}")
         raise HTTPException(status_code=500, detail=f"Face extraction failed: {str(e)}")
@@ -214,15 +225,21 @@ async def extract_faces(request: ExtractRequest):
 
 @app.post("/compare-faces", response_model=CompareResponse)
 async def compare_faces(file: UploadFile = File(...)):
-    """Extract embedding from uploaded face image for comparison"""
+    """Extract embedding from uploaded face image for comparison using AWS Rekognition"""
     try:
+        # Ensure collection exists
+        collection_manager.ensure_collection_exists()
+        
         # Validate file size
         contents = await file.read()
         if len(contents) > 5 * 1024 * 1024:
             raise HTTPException(status_code=400, detail="File too large. Max 5MB.")
 
-        # Load image
-        image = Image.open(io.BytesIO(contents)).convert("RGB")
+        # Validate image format
+        try:
+            image = Image.open(io.BytesIO(contents)).convert("RGB")
+        except Exception:
+            raise HTTPException(status_code=400, detail="Invalid image format")
 
         # Resize for efficiency
         max_dim = 800
@@ -231,16 +248,20 @@ async def compare_faces(file: UploadFile = File(...)):
             new_size = (int(image.size[0] * ratio), int(image.size[1] * ratio))
             image = image.resize(new_size, Image.LANCZOS)
 
-        image_array = np.array(image)
+        # Convert to bytes for Rekognition API
+        img_byte_arr = io.BytesIO()
+        image.save(img_byte_arr, format='JPEG')
+        image_bytes = img_byte_arr.getvalue()
 
-        results = model_manager.extract_faces(image_array)
+        # Extract faces using Rekognition detect_faces
+        face_data = collection_manager.extract_faces_from_image(image_bytes)
 
-        if not results:
+        if not face_data:
             return CompareResponse(embedding=None, faceDetected=False)
 
         # Use the first detected face
-        first_face = results[0] if isinstance(results[0], dict) else {}
-        embedding = first_face.get("embedding", [])
+        first_face = face_data[0]
+        embedding = first_face.get('embedding', [])
 
         if not embedding:
             return CompareResponse(embedding=None, faceDetected=False)

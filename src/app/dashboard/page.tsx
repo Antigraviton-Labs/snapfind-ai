@@ -46,7 +46,7 @@ function ProgressBar({ value, max, label, sublabel, color = 'bg-accent-purple' }
     if (max === null) {
         return (
             <div className="space-y-1.5">
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-xs sm:text-sm">
                     <span className="text-gray-400">{label}</span>
                     <span className="text-green-400">Unlimited</span>
                 </div>
@@ -64,7 +64,7 @@ function ProgressBar({ value, max, label, sublabel, color = 'bg-accent-purple' }
 
     return (
         <div className="space-y-1.5">
-            <div className="flex justify-between text-sm">
+            <div className="flex justify-between text-xs sm:text-sm">
                 <span className="text-gray-400">{label}</span>
                 <span className={isWarning ? 'text-amber-400' : 'text-gray-300'}>{pct}%</span>
             </div>
@@ -100,15 +100,15 @@ export default function DashboardPage() {
     return (
         <div className="animate-fade-in">
             {/* Header */}
-            <div className="mb-8 flex items-start justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold text-white">
+            <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                <div className="min-w-0 flex-1">
+                    <h1 className="text-2xl sm:text-3xl font-bold text-white break-words">
                         Welcome back, <span className="gradient-text">{user?.name?.split(' ')[0]}</span>
                     </h1>
-                    <p className="text-gray-500 mt-1">Here&apos;s what&apos;s happening with your events</p>
+                    <p className="text-sm sm:text-base text-gray-500 mt-1">Here&apos;s what&apos;s happening with your events</p>
                 </div>
                 {limits && (
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider ${limits.plan === 'pro'
+                    <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider whitespace-nowrap ${limits.plan === 'pro'
                             ? 'bg-gradient-to-r from-accent-purple to-accent-blue text-white'
                             : 'bg-white/[0.05] border border-white/[0.1] text-gray-400'
                         }`}>
@@ -119,11 +119,11 @@ export default function DashboardPage() {
 
             {/* Stats Grid */}
             {loading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
                     {Array.from({ length: 4 }).map((_, i) => <StatCardSkeleton key={i} />)}
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
                     <StatCard
                         title="Total Events"
                         value={data?.overview.totalEvents || 0}
@@ -156,9 +156,9 @@ export default function DashboardPage() {
 
             {/* Usage & Limits Panel */}
             {!loading && limits && (
-                <GlassCard className="p-6 mb-8">
-                    <h2 className="text-lg font-semibold text-white mb-5">Usage & Limits</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <GlassCard className="p-4 sm:p-6 mb-6 sm:mb-8">
+                    <h2 className="text-base sm:text-lg font-semibold text-white mb-4 sm:mb-5">Usage & Limits</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                         <ProgressBar
                             value={limits.events.used}
                             max={limits.events.unlimited ? null : limits.events.limit}
@@ -198,10 +198,10 @@ export default function DashboardPage() {
             )}
 
             {/* Quick Actions + Recent Events */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                 {/* Quick Actions */}
-                <GlassCard className="p-6">
-                    <h2 className="text-lg font-semibold text-white mb-4">Quick Actions</h2>
+                <GlassCard className="p-4 sm:p-6">
+                    <h2 className="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4">Quick Actions</h2>
                     <div className="space-y-3">
                         <Link href="/dashboard/events/new" className="block">
                             <Button variant="primary" className="w-full justify-start gap-3">
@@ -232,16 +232,16 @@ export default function DashboardPage() {
 
                 {/* Recent Events */}
                 <div className="lg:col-span-2">
-                    <GlassCard className="p-6">
-                        <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-lg font-semibold text-white">Recent Events</h2>
-                            <Link href="/dashboard/events" className="text-sm text-accent-purple hover:underline">
+                    <GlassCard className="p-4 sm:p-6">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4 gap-2">
+                            <h2 className="text-base sm:text-lg font-semibold text-white">Recent Events</h2>
+                            <Link href="/dashboard/events" className="text-xs sm:text-sm text-accent-purple hover:underline whitespace-nowrap">
                                 View all
                             </Link>
                         </div>
 
                         {loading ? (
-                            <div className="space-y-4">
+                            <div className="space-y-3 sm:space-y-4">
                                 {Array.from({ length: 3 }).map((_, i) => <EventCardSkeleton key={i} />)}
                             </div>
                         ) : !data?.recentEvents?.length ? (
@@ -255,21 +255,21 @@ export default function DashboardPage() {
                                 }
                             />
                         ) : (
-                            <div className="space-y-3">
+                            <div className="space-y-2 sm:space-y-3">
                                 {data.recentEvents.map((event) => (
                                     <Link
                                         key={event._id}
                                         href={`/dashboard/events/${event._id}`}
-                                        className="block p-4 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.05] hover:border-accent-purple/20 transition-all duration-200"
+                                        className="block p-3 sm:p-4 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.05] hover:border-accent-purple/20 transition-all duration-200"
                                     >
-                                        <div className="flex items-center justify-between">
-                                            <div>
-                                                <h3 className="font-medium text-white">{event.title}</h3>
-                                                <p className="text-sm text-gray-500 mt-1">
+                                        <div className="flex items-start sm:items-center justify-between gap-3 min-w-0">
+                                            <div className="min-w-0 flex-1">
+                                                <h3 className="font-medium text-white text-sm sm:text-base truncate">{event.title}</h3>
+                                                <p className="text-xs sm:text-sm text-gray-500 mt-1">
                                                     {event.totalPhotos} photos · {event.storageFormatted} · {new Date(event.createdAt).toLocaleDateString()}
                                                 </p>
                                             </div>
-                                            <svg className="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <svg className="w-4 sm:w-5 h-4 sm:h-5 text-gray-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                             </svg>
                                         </div>
